@@ -34,7 +34,7 @@ class SupObject:
         self.view = view
         self.squareMIF = squareMIF
         self.squareKPT = squareKPT
-        self.deviations = (float(squareMIF)/float(squareKPT))*100-100
+        self.deviations = round((float(squareMIF)/float(squareKPT))*100-100, 2)
         self.x=[]
         self.y=[]
         self.errorRate=[]

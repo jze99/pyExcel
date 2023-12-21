@@ -66,18 +66,21 @@ def viewsHendler(page):
             exit()
             
     def OnDialogResultGeodesy(e: FilePickerResultEvent):
-        NewGeodesyObject.clear()
-        geodesySheets.options.clear()
-        if e.files == None:
+        try:
+            NewGeodesyObject.clear()
+            geodesySheets.options.clear()
+            if e.files == None:
+                return
+            else:
+                CheckPath(path=e.files[0].path, TextField= pathGeodesyDirectori)
+                for sheet in readSheets(pathDirectori=pathGeodesyDirectori.value):
+                    geodesySheets.options.append(dropdown.Option(str(sheet)))
+                if geodesySheets.options:
+                    geodesySheets.value=geodesySheets.options[0].key
+                geodesySheets.update()
+                exit()
+        except AssertionError:
             return
-        else:
-            CheckPath(path=e.files[0].path, TextField= pathGeodesyDirectori)
-            for sheet in readSheets(pathDirectori=pathGeodesyDirectori.value):
-                geodesySheets.options.append(dropdown.Option(str(sheet)))
-            if geodesySheets.options:
-                geodesySheets.value=geodesySheets.options[0].key
-            geodesySheets.update()
-            exit()
             
     def OnDialogResultPars(e: FilePickerResultEvent):
         parsSheets.options.clear()
@@ -207,6 +210,10 @@ def viewsHendler(page):
     
     def nextPars(e):
         page.go("/log")
+        if not geodesySheets.options:
+            time.sleep(1)
+            page.go("/pod")
+            return None
         if nextParsCont():
             page.go("/")
         else:
@@ -226,6 +233,27 @@ def viewsHendler(page):
     BeckParsButton = FloatingActionButton(icon=icons.ARROW_RIGHT_ALT,on_click=BeckPars, bgcolor = "#F05941")
        
     return {
+        '/pod':View(
+            route='/pod', 
+            controls=[
+                Column(
+                    controls=[
+                        Text(
+                            "Эта ошибка вызвана тем, что вы не дождались и не выбрали какой лист будет считываться с файла геодезия",
+                            size=45,
+                            color="#F05941",
+                            weight=FontWeight.NORMAL,
+                            text_align=TextAlign.START,
+                        ),
+                    ],
+                    expand=1,
+                    alignment=MainAxisAlignment.CENTER,
+                    horizontal_alignment=CrossAxisAlignment.CENTER,
+                ),
+                BeckParsButton,
+            ],    
+            bgcolor="#22092C"
+        ),
         '/isc':View(
             route='/isc', 
             controls=[
