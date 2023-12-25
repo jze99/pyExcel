@@ -11,8 +11,12 @@ def unloading(pathDirectori: str):
         for filename in os.scandir(pathDirectori):
             if filename.name.endswith(".mif"):
                 CadNumber = filename.name
-                CadNumber = CadNumber.split(" ")[0]
-                CadNumber = CadNumber.replace("_", ":")
+                CadNumber = CadNumber.split(" ")
+                if '_' in CadNumber[0]:
+                    CadNumber = str(CadNumber[0])
+                    CadNumber = CadNumber.replace("_", ":")
+                else:
+                    CadNumber = str(CadNumber[0]+":"+CadNumber[1]+":"+CadNumber[2]+":"+CadNumber[3])
                 readMif(filename.path, x=x, y=y)
                 NewMifCadObject.append(MifObject(CadNumber=CadNumber, x=x, y=y, square=Square(x,y)))
                 x.clear()
