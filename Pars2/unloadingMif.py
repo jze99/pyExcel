@@ -49,5 +49,5 @@ def readMif(path: str, x, y):
         x.append(round(float(ch[1]),2))
         
 def Square(x,y):
-   return int(0.5*np.abs(np.dot(x,np.roll(y,1))-np.dot(y,np.roll(x,1))))
+   return round(0.5*np.abs(np.dot(x,np.roll(y,1))-np.dot(y,np.roll(x,1))),0)
             

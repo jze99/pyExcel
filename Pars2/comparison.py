@@ -7,16 +7,16 @@ def test(Mif, _i):
             for Kpt in CadObject.NewKPTCadObject:
                 for Xkpt in Kpt.x:
                     i = Kpt.x.index(Xkpt)
-                    if float(Xmif) == float(Xkpt) and o == False and str(Mif.CadNumber) == str(Kpt.CadNumber):
+                    if float(Xmif) == float(Xkpt) and float(Mif.y[__i]) == float(Kpt.y[i]) and o == False and str(Mif.CadNumber) == str(Kpt.CadNumber):
                         CadObject.NewSuperObject[_i].ader(x=Xkpt, y=Kpt.y[i], errorRate=Kpt.errorRate[i], methodDetermination=Kpt.methodDetermination[i], sourse="ЕГРН")  
                         o = True
                         break
-                    if float(Xmif) == float(Xkpt) and o == False:
+                    if float(Xmif) == float(Xkpt) and float(Mif.y[__i]) == float(Kpt.y[i]) and o == False:
                         CadObject.NewSuperObject[_i].ader(x=Xkpt, y=Kpt.y[i], errorRate=Kpt.errorRate[i], methodDetermination=Kpt.methodDetermination[i], sourse="КПТ")  
                         o = True
                         break
             for geo in CadObject.NewGeodesyObject:
-                if float(Xmif) == float(geo.x):
+                if float(Xmif) == float(geo.x) and float(Mif.y[__i]) == float(geo.y) and o == False:
                     CadObject.NewSuperObject[_i].ader(x=geo.x, y=geo.y, errorRate=geo.errorRate, methodDetermination=geo.methodDetermination, sourse="ГОДЕЗИЯ") 
                     o = True
                     break 

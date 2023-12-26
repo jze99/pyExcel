@@ -205,7 +205,6 @@ def viewsHendler(page):
             time.sleep(1)
             return False
         start()
-        Discharge(path=pathParsDirectori.value, _sheet=parsSheets.value)
         return True
     
     def nextPars(e):
@@ -215,7 +214,11 @@ def viewsHendler(page):
             page.go("/pod")
             return None
         if nextParsCont():
-            page.go("/")
+            if not Discharge(path=pathParsDirectori.value, _sheet=parsSheets.value):
+                time.sleep(1)
+                page.go("/erSave")
+            else:
+                page.go("/")
         else:
             page.go("/isc")
         NewMifCadObject.clear()
@@ -233,6 +236,27 @@ def viewsHendler(page):
     BeckParsButton = FloatingActionButton(icon=icons.ARROW_RIGHT_ALT,on_click=BeckPars, bgcolor = "#F05941")
        
     return {
+        '/erSave':View(
+            route='/erSave', 
+            controls=[
+                Column(
+                    controls=[
+                        Text(
+                            "Закройте файл в который сохраняете данные",
+                            size=45,
+                            color="#F05941",
+                            weight=FontWeight.NORMAL,
+                            text_align=TextAlign.START,
+                        ),
+                    ],
+                    expand=1,
+                    alignment=MainAxisAlignment.CENTER,
+                    horizontal_alignment=CrossAxisAlignment.CENTER,
+                ),
+                BeckParsButton,
+            ],    
+            bgcolor="#22092C"
+        ),
         '/pod':View(
             route='/pod', 
             controls=[
